@@ -1,8 +1,11 @@
-# just getting started with GO & Cobra generator...
+# GO Cli interface on mongodb
+## subcommands
+- users
+### flags
+> - *_-i_* or *_--input_* : create user reading user data from stdin
+> - *_-a_* or *_--args_* : create user reading user data from args
 
-## what we are going to do in this repository ?!
-- use mongodb as database
-- CLI interface for adding users and retrive them
-- input flag for user data read from stdin
-- args flag for user data read from args
-- http flag and an arg (user data as json)
+### arguments
+- when using *_-a_* or *_--args_* flag:
+> - use *_--firstname=_* for user firstname
+> - use *_--lastname=_* for user lastname
