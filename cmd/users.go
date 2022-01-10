@@ -16,10 +16,6 @@ import (
 )
 
 var reader = bufio.NewReader(os.Stdin)
-var MONGO_IP = os.Getenv("MONGO_IP")
-var MONGO_PORT = os.Getenv("MONGO_PORT")
-var MONGO_COL = os.Getenv("MONGO_COL")
-var MONGO_DB = os.Getenv("MONGO_DB")
 
 // usersCmd represents the users command
 var usersCmd = &cobra.Command{
@@ -28,14 +24,15 @@ var usersCmd = &cobra.Command{
 	Long:  `create or get users by flags from mongodb database`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// connect to mongodb
-		client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://"+MONGO_IP+":"+MONGO_PORT))
+		client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://"+os.Getenv("MONGO_IP")+":"+os.Getenv("MONGO_PORT")))
+
 		if err != nil {
 			panic(err)
 		}
 		if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
 			panic(err)
 		}
-		usersCollection := client.Database(MONGO_DB).Collection(MONGO_COL)
+		usersCollection := client.Database(os.Getenv("MONGO_DB")).Collection(os.Getenv("MONGO_COL"))
 
 		inputflag, _ := cmd.Flags().GetBool("input")
 		argsflag, _ := cmd.Flags().GetBool("args")
